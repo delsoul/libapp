@@ -1,0 +1,29 @@
+﻿@model libapp.Models.IndexViewModel
+@using libapp.Helpers
+
+<html>
+    <head>
+        <title>@ViewBag.Title - новости</title>
+    </head>
+    <body>
+        <h3 class="h3 text-center">Новости</h3>
+            <div class="row">
+                @foreach (var n in Model.News)
+                {
+                    <div class="col-md-4">
+                        <div class="card border-primary">
+                            <div class="card-body">
+                                <h5 class="card-title">@n.Title</h5>
+                                <p class="card-text">@n.Content.Substring(0, 250)...</p>
+                                <a href="~/Home/ViewNews/@n.NewsId" class="btn btn-primary">Читать</a>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                }
+            </div>
+        <div class="pagination justify-content-center">
+            @Html.PageLinks(Model.PageInfo, x => Url.Action("News", new { Page = x }))
+        </div>
+    </body>
+</html>

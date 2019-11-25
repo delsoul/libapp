@@ -1,0 +1,34 @@
+﻿@{
+    Layout = "~/Views/Shared/_LibrarianLayout.cshtml";
+}
+
+@model libapp.Models.News
+
+<html>
+    <head>
+        <title>@ViewBag.Title - редактирование новости</title>
+    </head>
+    <body>
+        <h3 class="h3">@Model.Title</h3>
+
+        @using (Html.BeginForm("EditNews", "Librarian", FormMethod.Post, new { @class = "col-md-4" }))
+        {
+            <fieldset>
+                @Html.HiddenFor(n => n.NewsId)
+                @Html.HiddenFor(n => n.Picture)
+                <p>
+                    @Html.LabelFor(n => n.Title, "Заголовок")
+                    <br />
+                    @Html.TextBoxFor(n => n.Title, new { @class = "form-control" })
+                </p>
+                <p>
+                    @Html.LabelFor(n => n.Content, "Содержание")
+                    <br />
+                    @Html.TextAreaFor(n => n.Content, new { @class = "form-control" })
+                </p>
+                <br />
+                <p><input type="submit" value="Сохранить" class="btn btn-success"/></p>
+            </fieldset>
+        }
+    </body>
+</html>

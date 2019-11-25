@@ -1,0 +1,79 @@
+﻿@model libapp.Models.IndexViewModel
+@using libapp.Helpers
+
+@{
+    Layout = "~/Views/Shared/_LibrarianLayout.cshtml";
+}
+
+<html>
+<head>
+    <title>@ViewBag.Title - книги</title>
+</head>
+<body>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Наименование</th>
+                <th scope="col">Автор</th>
+                <th scope="col">Жанр</th>
+                <th scope="col">Издатель</th>
+                <th scope="col">Описание</th>
+                <th scope="col">Состояние</th>
+                <th scope="col">Читатель</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        @if (Model.Books.Count() == 0)
+        {
+            <tbody>
+                <tr>
+                    <td colspan="9" class="text-center">Нет ни одной книги.<a href="~/Librarian/AddBook"> Добавить?</a></td>
+                </tr>
+            </tbody>
+        }
+        else
+        {
+            foreach (var b in Model.Books)
+            {
+                <tbody>
+                    <tr>
+                        <td>@b.Id</td>
+                        <td>@b.Name</td>
+                        <td>@b.Author</td>
+                        <td>@b.Genre</td>
+                        <td>@b.Publisher</td>
+                        <td>@b.Description.Substring(0, 100)...</td>
+                        @if (b.BookState == libapp.Models.BookState.Free)
+                        {
+                            <td>Свободна</td>
+                        }
+                        else if (b.BookState == libapp.Models.BookState.Booked)
+                        {
+                            <td><a href="~/Librarian/Issued/@b.Id">Выдать</a></td>
+                        }
+                        else
+                        {
+                            <td><a href="~/Librarian/TakeBack/@b.Id">Принять</a></td>
+                        }
+                        @if(b.BookState == libapp.Models.BookState.Issued | b.BookState == libapp.Models.BookState.Booked)
+                        {
+                            <td>@b.Client</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td><a href="~/Librarian/EditBook/@b.Id">Редактировать</a></td>
+                        <td><a href="~/Librarian/DeleteBook/@b.Id">Удалить</a></td>
+                    </tr>
+                </tbody>
+            }
+        }
+    </table>
+    <div class="pagination justify-content-center">
+        @Html.PageLinks(Model.PageInfo, x => Url.Action("Books", new { Page = x }))
+    </div>
+</body>
+</html>

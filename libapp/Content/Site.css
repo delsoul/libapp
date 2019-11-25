@@ -1,0 +1,13 @@
+﻿body {
+    padding-top: 90px;
+    margin: 0px;
+    /*background-color: #bfbebe;*/ /*не лучшей идеей оказалось играть с background*/
+}
+
+.form-group {
+    width: 30%;
+}
+
+.row {
+    padding-top: 30px;
+}

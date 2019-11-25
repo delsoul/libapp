@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "~/Views/Shared/_LibrarianLayout.cshtml";
+}
+
+@model libapp.Models.Book
+
+<html>
+    <head>
+        <title>@ViewBag.Title - редактирование книги</title>
+    </head>
+    <body>
+        <h3 class="h3">@Model.Name</h3>
+        <h4 class="h4 text-muted">@Model.Author</h4>
+        <br />
+        @using (Html.BeginForm("EditBook", "Librarian", FormMethod.Post, new { @class = "col-md-4" }))
+        {
+            <fieldset>
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.Picture)
+                <p>
+                    @Html.LabelFor(m => m.Name, "Название книги")
+                    <br />
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                </p>
+                <p>
+                    @Html.LabelFor(m => m.Author, "Автор")
+                    <br />
+                    @Html.TextBoxFor(m => m.Author, new { @class = "form-control" })
+
+                </p>
+                <p>
+                    @Html.LabelFor(m => m.Genre, "Жанр")
+                    <br />
+                    @Html.TextBoxFor(m => m.Genre, new { @class = "form-control" })
+                </p>
+                <p>
+                    @Html.LabelFor(m => m.Publisher, "Издатель")
+                    <br />
+                    @Html.TextBoxFor(m => m.Publisher, new { @class = "form-control" })
+                </p>
+                <p>
+                    @Html.LabelFor(m => m.Description, "Описание")
+                    <br />
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                </p>
+                <br />
+                <p><input type="submit" value="Сохранить" class="btn btn-success"/></p>
+            </fieldset>
+        }
+    </body>
+</html>

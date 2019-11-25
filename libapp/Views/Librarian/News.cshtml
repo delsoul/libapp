@@ -1,0 +1,51 @@
+﻿@model libapp.Models.IndexViewModel
+@using libapp.Helpers
+
+@{
+    Layout = "~/Views/Shared/_LibrarianLayout.cshtml";
+}
+
+<html>
+<head>
+    <title>@ViewBag.Title - новости</title>
+</head>
+<body>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Заголовок</th>
+                <th scope="col">Содержание</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        @if (Model.News.Count() == 0)
+        {
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-center">Нет ни одной новости. <a href="~/Librarian/AddNews">Добавить?</a></td>
+                </tr>
+            </tbody>
+        }
+        else
+        {
+            foreach (var n in Model.News)
+            {
+                <tbody>
+                    <tr>
+                        <td>@n.NewsId</td>
+                        <td>@n.Title</td>
+                        <td>@n.Content</td>
+                        <td><a href="~/Librarian/EditNews/@n.NewsId">Редактировать</a></td>
+                        <td><a href="~/Librarian/DeleteNews/@n.NewsId">Удалить</a></td>
+                    </tr>
+                </tbody>
+            }
+        }
+    </table>
+    <div class="pagination justify-content-center">
+        @Html.PageLinks(Model.PageInfo, x => Url.Action("News", new { Page = x }))
+    </div>
+</body>
+</html>

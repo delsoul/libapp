@@ -1,0 +1,39 @@
+﻿@model libapp.Models.AddUser
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<html>
+    <head>
+        <title>@ViewBag.Title - новый пользователь</title>
+    </head>
+    <body>
+        <h3 class="h3">Добавление нового пользователя</h3>
+        <form method="post">
+            <div class="form-group">
+                <label>Имя пользователя</label>
+                @Html.TextBoxFor(u => u.UserName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Электронная почта</label>
+                @Html.TextBoxFor(u => u.Email, new { @class = "form-control" })
+            </div>
+            <p>Роль</p>
+            <div class="form-group">
+                @Html.RadioButtonFor(u => u.Role, "librarian")
+                <label>Библиотекарь</label>
+                <br />
+                @Html.RadioButtonFor(u => u.Role, "user")
+                <label>Пользователь</label>
+            </div>
+            <div class="form-group">
+                <label>Пароль</label>
+                @Html.TextBoxFor(u => u.Password, new { @class = "form-control" })
+            </div>
+            <div>
+                <input type="submit" value="Добавить пользователя" class="btn btn-success" />
+            </div>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a href="~/Home/Index" class="navbar-brand">Электронная библиотека</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a href="~/Home/News" class="nav-link">Новости</a>
+                </li>
+                <li class="nav-item">
+                    <a href="~/Home/Toreaders" class="nav-link">Читателям</a>
+                </li>
+                <li class="nav-item">
+                    <a href="~/Home/Catalog" class="nav-link">Каталог</a>
+                </li>
+                <li class="nav-item">
+                    <a href="~/Home/Services" class="nav-link">Услуги</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        О нас
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a href="~/Home/History" class="dropdown-item">История</a>
+                        <a href="~/Home/Contacts" class="dropdown-item">Контакты</a>
+                        <a href="~/Home/Libnet" class="dropdown-item">Библиосеть</a>
+                    </div>
+                </li>
+            </ul>
+            <div class="navbar-text">
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            @Html.Partial("_LoginPartial")
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <footer>
+            <hr />
+            <p class="text-center">&copy; @DateTime.Now.Year - Электронная библиотека</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

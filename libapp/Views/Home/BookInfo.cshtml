@@ -1,0 +1,72 @@
+﻿@model libapp.Models.Book
+
+<html>
+<head>
+    <title>@ViewBag.Title - информация о книге</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form class="border-right">
+                    @if (Model.Picture != null)
+                    {
+                        @Html.Raw("<img style='width:286px; height:445px;' class = 'card-img-top' src=\"data:image/jpeg;base64,"
+                                        + Convert.ToBase64String(Model.Picture) + "\" />")
+                    }
+                </form>
+            </div>
+            <div class="col">
+                <form class="text-center">
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <p>@Html.LabelFor(b => b.Name, "Наименование:", new { @class = "font-italic" })</p>
+                            <p>@Html.DisplayFor(b => b.Name)</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <p>@Html.LabelFor(b => b.Author, "Автор:", new { @class = "font-italic" })</p>
+                            <p>@Html.DisplayFor(b => b.Author)</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <p>@Html.LabelFor(b => b.Genre, "Жанр:", new { @class = "font-italic" })</p>
+                            <p>@Html.DisplayFor(b => b.Genre)</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            <p>@Html.LabelFor(b => b.Publisher, "Издательство:", new { @class = "font-italic" })</p>
+                            <p>@Html.DisplayFor(b => b.Publisher)</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div>
+        <p>@Html.LabelFor(b => b.Description, "Описание:", new { @class = "font-italic" })</p>
+        <p>@Html.DisplayFor(b => b.Description)</p>
+    </div>
+    <br />
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (Model.BookState == libapp.Models.BookState.Free)
+        {
+            <a href="~/Librarian/Reservation/@Model.Id" class="btn btn-success btn-lg btn-block">Забронировать</a>
+        }
+        else if (Model.BookState == libapp.Models.BookState.Booked)
+        {
+            <a href="~/Librarian/ReReservation/@Model.Id" class="btn btn-success btn-lg btn-block">Разбронировать</a>
+        }
+    }
+    else
+    {   
+        <p class="text-center text-secondary">Забронировать книгу можно только зарегистрированным пользователям</p>
+    }
+    @*<a href="~/Librarian/Reservation/@Model.Id" class="btn btn-success btn-lg btn-block">Забронировать!</a>*@
+</body>
+</html>

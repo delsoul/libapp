@@ -1,0 +1,67 @@
+﻿@model libapp.Models.IndexViewModel
+@using libapp.Helpers
+
+<html>
+<head>
+    <title>@ViewBag.Title - каталог</title>
+</head>
+<body>
+    <div>
+        @using (Ajax.BeginForm("_BookSearch", new AjaxOptions { UpdateTargetId = "results" }))
+        {
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Наименование книги" aria-label="Наименование книги" aria-describedby="button-addon2" name="name">
+                <div class="input-group-append">
+                    <button class="btn btn-success" type="submit" id="button-addon2" value="Поиск" style="margin-right:59px">Поиск</button>
+                </div>
+            </div>
+        }
+        <div id="results"></div>
+    </div>
+    <br />
+    <div class="row">
+        @foreach (var b in Model.Books)
+        {
+            <!-- карточка книги -->
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    @if (b.Picture != null)
+                    {
+                        @Html.Raw("<img style='width:286px; height:445px;' class = 'card-img-top' src=\"data:image/jpeg;base64,"
+                                        + Convert.ToBase64String(b.Picture) + "\" />")
+                    }
+                    <div class="card-body text-center">
+                        <h5 class="card-title"><a href="~/Home/BookInfo/@b.Id">@b.Name</a></h5>
+                        <h6 class="card-title">@b.Author</h6>
+                        <h6 class="card-title">@b.Genre</h6>
+                        <h6 class="card-title text-muted">@b.Publisher</h6>
+                        <p class="card-text">@b.Description.Substring(0, 150)...</p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (b.BookState == libapp.Models.BookState.Free)
+                            {
+                                <a href="~/Librarian/Reservation/@b.Id" class="btn btn-primary">Забронировать</a>
+                            }
+                            else if (b.BookState == libapp.Models.BookState.Booked)
+                            {
+                                <a href="~/Librarian/ReReservation/@b.Id" class="btn btn-primary">Разбронировать</a>
+                            }
+                        }
+                        else
+                        {
+                            <div class="card-footer">
+                                <small class="text-center">Забронировать книгу можно только зарегистрированным пользователям</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <br />
+            </div>
+            <!-- карточка книги -->
+        }
+        </div>
+    <div class="pagination justify-content-center">
+        @Html.PageLinks(Model.PageInfo, x => Url.Action("Catalog", new { Page = x }))
+    </div>
+</body>
+</html>

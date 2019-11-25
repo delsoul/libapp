@@ -1,0 +1,51 @@
+﻿@{
+    Layout = "~/Views/Shared/_LibrarianLayout.cshtml";
+}
+
+@model libapp.Models.Book
+
+<html>
+    <head>
+        <title>@ViewBag.Title - новая книга</title>
+    </head>
+    <body>
+        <h3 class="h3">Новая книга</h3>
+        <br />
+        @using (Html.BeginForm("AddBook", "Librarian", FormMethod.Post, new { enctype = "multipart/form-data", @class = "col-md-4" }))
+        {
+            @Html.ValidationSummary(true)
+
+            @Html.LabelFor(model => model.Name, "Наименование")
+            <br />
+            @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+            <br />
+            <br />
+            @Html.LabelFor(model => model.Author, "Автор")
+            <br />
+            @Html.TextBoxFor(model => model.Author, new { @class = "form-control" })
+            <br />
+            <br />
+            @Html.LabelFor(model => model.Genre, "Жанр")
+            <br />
+            @Html.TextBoxFor(model => model.Genre, new { @class = "form-control" })
+            <br />
+            <br />
+            @Html.LabelFor(model => model.Publisher, "Издатель")
+            <br />
+            @Html.TextBoxFor(model => model.Publisher, new { @class = "form-control" })
+            <br />
+            <br />
+            @Html.LabelFor(model => model.Description, "Описание")
+            <br />
+            @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+            <br />
+            <br />
+            <div class="editor-field">
+                <input type="file" name="uploadImage" />
+            </div>
+            <br />
+            <br />
+            <input type="submit" value="Добавить" class="btn btn-success" />
+        }
+    </body>
+</html>

@@ -1,0 +1,46 @@
+﻿@model IEnumerable<libapp.Models.Book>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="searchresults">
+    <h5>Результат по поиску: @Model.First().Name</h5>
+    <div class="row">
+        @foreach (var b in Model)
+        {
+            <!-- карточка книги -->
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@b.Name</h5>
+                        <h6 class="card-title">@b.Author</h6>
+                        <h6 class="card-title">@b.Genre</h6>
+                        <h6 class="card-title text-muted">@b.Publisher</h6>
+                        <p class="card-text">@b.Description.Substring(0, 150)...</p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (b.BookState == libapp.Models.BookState.Free)
+                            {
+                                <a href="~/Book/Reservation/@b.Id" class="btn btn-primary">Забронировать</a>
+                            }
+                            else if (b.BookState == libapp.Models.BookState.Booked)
+                            {
+                                <a href="~/Book/ReReservation/@b.Id" class="btn btn-primary">Разбронировать</a>
+                            }
+                        }
+                        else
+                        {
+                            <div class="card-footer">
+                                <small class="text-center">Забронировать книгу можно только зарегистрированным пользователям</small>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <br />
+            </div>
+            <!-- карточка книги -->
+        }
+    </div>
+</div>
+

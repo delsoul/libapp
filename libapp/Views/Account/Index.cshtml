@@ -1,0 +1,41 @@
+﻿@using libapp.Models
+@model IEnumerable<ApplicationUser>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<html>
+    <head>
+        <title>@ViewBag.Title - администратор</title>
+    </head>
+    <body>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">email</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            @foreach(var u in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>@u.Id</td>
+                        <td>@u.Email</td>
+                        <td>
+                            @using (Html.BeginForm("Delete", "Account", new { id = u.Id }))
+                            {
+                                @Html.ActionLink("Изменить", "Edit", new { id = u.Id },
+                                    new { @class = "btn btn-link", style = "float: left; margin-right: 10px" })
+                                <button class="btn btn-link" type="submit">Удалить</button>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </body>
+</html>

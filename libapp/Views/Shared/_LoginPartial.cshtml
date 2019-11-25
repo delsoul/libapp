@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    @Html.AntiForgeryToken()
+    <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @User.Identity.GetUserName()
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                @if (User.IsInRole("librarian"))
+                {
+                    <a href="~/Librarian/Books" class="dropdown-item">Библиотекарь</a>
+                }
+                else if (User.IsInRole("admin"))
+                {
+                    <a href="~/Account/Index" class="dropdown-item">Администратор</a>
+                }
+                <a href="~/Manage/Index" class="dropdown-item">Редактировать</a>
+                <a href="~/Account/LogOff" class="dropdown-item">Выйти</a>
+            </div>
+        </li>
+    </ul>
+}
+else
+{
+    <li class="nav-item">
+        <a href="~/Account/Login" class="nav-link">Войти</a>
+    </li>
+    <li class="nav-item">
+        <a href="~/Account/Register" class="nav-link">Регистрация</a>
+    </li>
+}
+
